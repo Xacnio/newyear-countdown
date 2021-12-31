@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+    <style>
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 95%;
+            text-align: center;
+            max-width: 100%;
+            margin: 0;
+            width: 100%;
+        }
+
+        .container .to {
+            font-size: 90px;
+            font-weight: bold;
+        }
+
+        .container .to #to {
+            display: inline-block;
+        }
+
+        .container .title {
+            font-size: 90px;
+            font-weight: bold;
+        }
+
+        .container .value {
+            font-size: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row col-sm-12">
+            <div class="col-sm-12">
+                <div class="to">To <div id="to"></div>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <div class="title">D</l>
+                </div>
+                <div class="value" id="days"></div>
+            </div>
+            <div class="col-sm-3">
+                <div class="title">H</l>
+                </div>
+                <div class="value" id="hours"></div>
+            </div>
+            <div class="col-sm-3">
+                <div class="title">M</l>
+                </div>
+                <div class="value" id="minutes"></div>
+            </div>
+            <div class="col-sm-3">
+                <div class="title">S</l>
+                </div>
+                <div class="value" id="seconds"></div>
+            </div>
+            <div class="col-sm-2">
+                <div class="title">MS</l>
+                </div>
+                <div class="value" id="milliseconds"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const nextYear = moment().add(1, 'years').startOf('year');
+        document.getElementById('to').innerHTML = nextYear.year()
+        const interval = 1;
+
+        const myInterval = setInterval(function () {
+            const diffTime = nextYear - moment();
+            if (diffTime < 0) {
+                clearInterval(myInterval);
+                Update({ days: 0, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 })
+                return
+            }
+            var duration = moment.duration(diffTime, 'milliseconds');
+            Update({ days: parseInt(duration.asDays()), hours: duration.hours(), minutes: duration.minutes(), seconds: duration.seconds(), milliseconds: duration.milliseconds() })
+        }, interval);
+
+        function Update(data) {
+            document.getElementById('days').innerHTML = data.days;
+            document.getElementById('hours').innerHTML = data.hours;
+            document.getElementById('minutes').innerHTML = data.minutes;
+            document.getElementById('seconds').innerHTML = data.seconds;
+            document.getElementById('milliseconds').innerHTML = data.milliseconds;
+        }
+    </script>
+</body>
+
+</html>
